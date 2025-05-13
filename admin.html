@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Panz Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ... (CSS Anda dari respons sebelumnya tetap di sini) ... */
+        body {
+            padding: 0; margin: 0; font-family: 'Poppins', sans-serif;
+            background-color: #121212; color: #e0e0e0; line-height: 1.6;
+        }
+        :root {
+            --primary-blue: #007bff; --primary-blue-hover: #0056b3; --dark-card: #1e1e2e;
+            --input-bg: #2a2a3f; --input-border: #3a3a50; --text-light: #f0f0f0;
+            --text-secondary: #a0a0c0; --success: #28a745; --danger: #dc3545;
+            --warning: #ffc107; --border-radius-sm: 5px; --border-radius-md: 8px;
+        }
+        /* General button style */
+        .button-base { padding: 10px 18px; border: none; border-radius: var(--border-radius-sm); cursor: pointer; font-weight: 500; font-size: 1em; transition: background-color 0.2s ease-in-out, transform 0.1s ease; font-family: 'Poppins', sans-serif; }
+        .button-base:active { transform: scale(0.98); }
+        .button-small { padding: 8px 12px; font-size: 0.9em; }
+        .primary { background-color: var(--primary-blue); color: white; }
+        .primary:hover { background-color: var(--primary-blue-hover); }
+        .danger { background-color: var(--danger); color: white; }
+        .danger:hover { background-color: #c82333; }
+        .warning { background-color: var(--warning); color: #212529; }
+        .warning:hover { background-color: #e0a800; }
+
+        /* Auth Gates */
+        .auth-gate { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 25px; box-sizing: border-box; background-color: #181828; }
+        .auth-gate h2 { color: var(--text-light); margin-bottom: 25px; font-weight: 600; }
+        .auth-gate input[type="password"], .auth-gate input[type="text"] { padding: 12px 15px; margin-bottom: 18px; border-radius: var(--border-radius-md); border: 1px solid var(--input-border); background-color: var(--input-bg); color: var(--text-light); font-size: 1em; width: 100%; max-width: 350px; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        .auth-gate input[type="password"]:focus, .auth-gate input[type="text"]:focus { outline: none; border-color: var(--primary-blue); box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25); }
+        .auth-gate .error-msg { color: var(--danger); margin-top: 12px; min-height: 1.5em; text-align: center; max-width: 350px; font-size: 0.9em; }
+        #admin-login-gate { display: none; }
+
+        /* Admin Container & Header */
+        .admin-container { padding: 25px; max-width: 1280px; margin: 25px auto; display: none; }
+        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid var(--input-border); }
+        .admin-header h1 { margin-bottom: 0; font-size: 2em; color: var(--text-light); font-weight: 600; }
+        
+        /* Admin Navigation */
+        .admin-nav { background-color: var(--dark-card); padding: 15px 20px; border-radius: var(--border-radius-md); margin-bottom: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .admin-nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 20px; padding: 0; margin:0; }
+        .admin-nav a { color: var(--text-secondary); font-weight: 500; padding: 10px 8px; border-bottom: 3px solid transparent; transition: color 0.2s, border-color 0.2s; white-space: nowrap; text-decoration: none; font-size: 0.95em; }
+        .admin-nav a.active, .admin-nav a:hover { color: var(--primary-blue); border-bottom-color: var(--primary-blue); }
+
+        /* Admin Section Layout */
+        .admin-section { display: none; margin-top: 30px; padding: 20px; background-color: var(--dark-card); border-radius: var(--border-radius-md); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .admin-section.active { display: block; animation: fadeIn 0.5s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .admin-section h2 { color: var(--text-light); margin-top: 0; margin-bottom: 25px; font-size: 1.5em; font-weight: 600; border-bottom: 1px solid var(--input-border); padding-bottom: 10px; }
+
+        /* Table Styles */
+        .admin-table-wrapper { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--input-border); white-space: nowrap; }
+        th { font-weight: 600; color: var(--text-secondary); text-transform: uppercase; font-size: 0.85em; letter-spacing: 0.5px; background-color: rgba(42, 42, 63, 0.5); }
+        td { color: var(--text-light); vertical-align: middle; }
+        .action-buttons button { margin-right: 8px; } /* Style untuk tombol aksi */
+        .action-buttons button:last-child { margin-right: 0; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover { background-color: rgba(0, 123, 255, 0.05); } /* Menggunakan variabel CSS jika ada */
+        .status-sukses, .status-success { color: var(--success); font-weight: bold; }
+        .status-gagal, .status-failed-system, .status-match-failed-user-not-found, .status-processing-error, .status-failed { color: var(--danger); font-weight: bold; }
+        .status-pending, .status-pending-gateway, .status-waiting-transfer, .status-processing { color: var(--warning); font-weight: bold; }
+
+        /* Stats Cards */
+        .stat-card { background-color: var(--dark-card); padding: 25px; border-radius: var(--border-radius-md); text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: transform 0.2s ease-in-out; }
+        .stat-card:hover { transform: translateY(-5px); }
+        .stat-card h3 { color: var(--text-secondary); font-size: 1em; margin-top: 0; margin-bottom: 12px; font-weight: 500; }
+        .stat-card .stat-value { font-size: 2.2em; font-weight: 700; color: var(--primary-blue); line-height: 1.2; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; margin-bottom: 30px; }
+
+        /* General Messages & Loaders */
+        #admin-dashboard-message-area { padding: 20px; text-align: center; }
+        .loading-msg, .error-msg-dashboard { font-size: 1.1em; color: var(--text-secondary); }
+        .error-msg-dashboard { color: var(--danger); }
+        .spinner { border: 4px solid rgba(255, 255, 255, 0.1); width: 36px; height: 36px; border-radius: 50%; border-left-color: var(--primary-blue); animation: spin 1s linear infinite; margin: 0 auto 10px auto; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-container { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
+
+        /* Modal Styling */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+        }
+        .modal-content {
+            background-color: var(--dark-card);
+            margin: 10% auto; /* 10% from the top and centered */
+            padding: 25px;
+            border-radius: var(--border-radius-md);
+            width: 90%;
+            max-width: 500px; /* Max width */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+            animation: slideIn 0.3s ease-out;
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .modal-header {
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--input-border);
+            margin-bottom: 20px;
+        }
+        .modal-header h2 {
+            margin: 0;
+            color: var(--text-light);
+            font-size: 1.4em;
+        }
+        .close-button {
+            color: var(--text-secondary);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            line-height: 1;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: var(--text-light);
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .modal-body .form-group {
+            margin-bottom: 18px;
+        }
+        .modal-body label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        .modal-body input[type="text"],
+        .modal-body input[type="email"],
+        .modal-body input[type="number"],
+        .modal-body input[type="password"],
+        .modal-body select {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: var(--border-radius-sm);
+            border: 1px solid var(--input-border);
+            background-color: var(--input-bg);
+            color: var(--text-light);
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+         .modal-body input[type="checkbox"] {
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        .modal-footer {
+            padding-top: 20px;
+            border-top: 1px solid var(--input-border);
+            text-align: right;
+            margin-top: 25px;
+        }
+        .modal-footer button {
+            margin-left: 10px;
+        }
+        .modal-error-message {
+            color: var(--danger);
+            font-size: 0.9em;
+            margin-top: 15px;
+            text-align: left;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="admin-key-gate" class="auth-gate">
+        <h2>Akses Panel Admin</h2>
+        <input type="password" id="admin-access-key-input" placeholder="Masukkan Admin Key">
+        <button id="submit-admin-key-button" class="button-base primary">Submit Key</button>
+        <p id="admin-key-error-message" class="error-msg"></p>
+    </div>
+
+    <div id="admin-login-gate" class="auth-gate">
+        <h2>Login Admin</h2>
+        <input type="text" id="admin-username-input" placeholder="Username Admin" autocomplete="username">
+        <input type="password" id="admin-password-input" placeholder="Password Admin" autocomplete="current-password">
+        <button id="submit-admin-login-button" class="button-base primary">Login Admin</button>
+        <p id="admin-login-error-message" class="error-msg"></p>
+    </div>
+
+    <div id="admin-dashboard-message-area"></div>
+
+    <div class="admin-container">
+        <header class="admin-header">
+            <h1>Admin Dashboard</h1>
+            <div>
+                <span id="admin-username-display" style="margin-right: 15px; color: var(--text-secondary);"></span>
+                <button id="admin-logout-button" class="button-base button-small danger admin-logout">Logout</button>
+            </div>
+        </header>
+
+        <nav class="admin-nav">
+            <ul>
+                <li><a href="#stats" class="admin-nav-link active" data-section="stats-section">Statistik</a></li>
+                <li><a href="#users" class="admin-nav-link" data-section="users-section">Pengguna</a></li>
+                <li><a href="#transactions" class="admin-nav-link" data-section="transactions-section">Transaksi</a></li>
+                <li><a href="#deposits" class="admin-nav-link" data-section="deposits-section">Deposit</a></li>
+            </ul>
+        </nav>
+
+        <section id="stats-section" class="admin-section active">
+            <h2>Statistik Ringkas</h2>
+            <div class="stats-grid">
+                <div class="stat-card"><h3>Total Pengguna</h3><p id="stat-total-users" class="stat-value">0</p></div>
+                <div class="stat-card"><h3>Transaksi Sukses</h3><p id="stat-total-tx-success" class="stat-value">0</p></div>
+                <div class="stat-card"><h3>Deposit Sukses</h3><p id="stat-total-deposit-success" class="stat-value">0</p></div>
+                <div class="stat-card"><h3>Omset Transaksi</h3><p id="stat-total-revenue" class="stat-value">Rp 0</p></div>
+            </div>
+            <p style="text-align: center; font-size:0.9em; font-style: italic; color: var(--text-secondary); margin-top: 20px;">(Data statistik dimuat saat tab dipilih)</p>
+        </section>
+
+        <section id="users-section" class="admin-section">
+            <h2>Daftar Pengguna</h2>
+            <div class="admin-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID User</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Saldo</th>
+                            <th>Admin?</th>
+                            <th>Tgl Daftar</th>
+                            <th>Aksi</th> </tr>
+                    </thead>
+                    <tbody id="users-table-body">
+                        <tr><td colspan="7"><div class="loading-container"><div class="spinner"></div>Memuat data pengguna...</div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="transactions-section" class="admin-section">
+            <h2>Riwayat Transaksi (Semua Pengguna)</h2>
+             <div class="admin-table-wrapper">
+                <table><thead><tr><th>Timestamp</th><th>User</th><th>Produk</th><th>Tujuan</th><th>Jumlah (Rp)</th><th>Status</th><th>SN/Ket</th><th>Ref Internal</th></tr></thead><tbody id="transactions-table-body"><tr><td colspan="8"><div class="loading-container"><div class="spinner"></div>Memuat data transaksi...</div></td></tr></tbody></table>
+            </div>
+        </section>
+        <section id="deposits-section" class="admin-section">
+            <h2>Riwayat Deposit</h2>
+             <div class="admin-table-wrapper">
+                <table><thead><tr><th>Tgl Dibuat</th><th>User</th><th>Saldo Diinginkan</th><th>Jumlah Transfer Unik</th><th>Status</th><th>Tgl Proses</th><th>Order ID</th></tr></thead><tbody id="deposits-table-body"><tr><td colspan="7"><div class="loading-container"><div class="spinner"></div>Memuat data deposit...</div></td></tr></tbody></table>
+            </div>
+        </section>
+    </div>
+
+    <div id="editUserModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-button" id="closeEditUserModalButton">&times;</span>
+                <h2>Edit Pengguna</h2>
+            </div>
+            <div class="modal-body">
+                <form id="editUserForm">
+                    <input type="hidden" id="editUserId">
+                    <div class="form-group">
+                        <label for="editUsername">Username:</label>
+                        <input type="text" id="editUsername" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editEmail">Email:</label>
+                        <input type="email" id="editEmail" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editBalance">Saldo (Rp):</label>
+                        <input type="number" id="editBalance" name="balance" step="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editIsAdmin">Status Admin:</label>
+                        <select id="editIsAdmin" name="isAdmin">
+                            <option value="false">Tidak</option>
+                            <option value="true">Ya</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editPassword">Password Baru (opsional):</label>
+                        <input type="password" id="editPassword" name="password" placeholder="Kosongkan jika tidak ingin diubah">
+                    </div>
+                    <div id="editUserModalErrorMessage" class="modal-error-message"></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="cancelEditUserButton" class="button-base">Batal</button>
+                <button type="submit" id="saveEditUserButton" form="editUserForm" class="button-base primary">Simpan Perubahan</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="./public/admin.js"></script>
+</body>
+</html>

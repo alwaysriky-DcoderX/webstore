@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Panz Store</title>
+    <link rel="stylesheet" href="./public/style.css">
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script> <style>
+        body { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; background-color: var(--dark-bg); font-family: 'Poppins', sans-serif; }
+        .auth-container { width: 100%; max-width: 400px; }
+        .cf-turnstile { margin-bottom: 15px; display: flex; justify-content: center;}
+        .page-title-section img { display: block; margin-left: auto; margin-right: auto;}
+        .page-title-section h2, .page-title-section p { color: var(--text-light);}
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <section id="login-section">
+            <div class="page-title-section" style="text-align: center;">
+                <img src="./public/icons/panzstore-logo.png" alt="Panz Store Logo" style="width:80px; margin-bottom:10px;">
+                <h2>Login Akun</h2>
+                <p>Selamat datang kembali di Panz Store!</p>
+            </div>
+            <form id="login-form" class="card">
+                <div class="input-group">
+                    <label for="login-username">Username atau Email</label> <input type="text" id="login-username" name="login-username" required autocomplete="username">
+                </div>
+                <div class="input-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" name="login-password" required autocomplete="current-password">
+                </div>
+                <div id="turnstile-login-widget" class="cf-turnstile" data-sitekey="0x4AAAAAABbk0VFxGUPcn8AQ" data-theme="dark"></div>
+                <div id="login-status" class="transaction-status-container" style="margin-top:0px; margin-bottom:15px; text-align:center; display:none;"></div>
+                <div class="submit-button-container">
+                    <button type="submit" class="submit-button">Login</button>
+                </div>
+                <p class="auth-switch" style="text-align: center; margin-top: 15px;">
+                    Belum punya akun? <a href="/register">Daftar di sini</a>
+                </p>
+                <p class="auth-switch" style="text-align: center; margin-top: 8px;">
+                    <a href="#forgot-password">Lupa Password?</a> </p>
+            </form>
+        </section>
+    </div>
+    <script src="./public/auth.js"></script>
+</body>
+</html>

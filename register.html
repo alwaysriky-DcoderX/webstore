@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrasi - Panz Store</title>
+    <link rel="stylesheet" href="./public/style.css">
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+     <style>
+        body { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; background-color: var(--dark-bg); font-family: 'Poppins', sans-serif;}
+        .auth-container { width: 100%; max-width: 400px; }
+        .cf-turnstile { margin-bottom: 15px; display: flex; justify-content: center;}
+        .page-title-section img { display: block; margin-left: auto; margin-right: auto;}
+        .page-title-section h2, .page-title-section p { color: var(--text-light);}
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <section id="register-section">
+            <div class="page-title-section" style="text-align: center;">
+                <img src="./public/icons/panzstore-logo.png" alt="Panz Store Logo" style="width:80px; margin-bottom:10px;">
+                <h2>Registrasi Akun Baru</h2>
+                <p>Buat akun Anda untuk mulai bertransaksi.</p>
+            </div>
+            <form id="register-form" class="card">
+                <div class="input-group">
+                    <label for="register-username">Username</label>
+                    <input type="text" id="register-username" name="register-username" required autocomplete="username">
+                </div>
+                <div class="input-group">
+                    <label for="register-email">Email</label>
+                    <input type="email" id="register-email" name="register-email" required autocomplete="email">
+                </div>
+                <div class="input-group">
+                    <label for="register-password">Password (min. 6 karakter)</label>
+                    <input type="password" id="register-password" name="register-password" required minlength="6" autocomplete="new-password">
+                </div>
+                <div id="turnstile-register-widget" class="cf-turnstile" data-sitekey="0x4AAAAAABbk0VFxGUPcn8AQ" data-theme="dark"></div>
+                <div id="register-status" class="transaction-status-container" style="margin-top:0px; margin-bottom:15px; text-align:center; display:none;"></div>
+                <div class="submit-button-container">
+                    <button type="submit" class="submit-button">Daftar</button>
+                </div>
+                <p class="auth-switch" style="text-align: center; margin-top: 15px;">
+                    Sudah punya akun? <a href="/login">Login di sini</a>
+                </p>
+            </form>
+        </section>
+    </div>
+    <script src="./public/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,589 @@
+:root {
+    --primary-blue: #0A7AFF;
+    --dark-bg: #121826;
+    --dark-card: #1A2035;
+    --text-light: #EAEAEA;
+    --text-secondary: #A0AEC0;
+    --accent-blue: #3A9DFF;
+    --black: #000000;
+    --white: #FFFFFF;
+    --danger: #e53e3e;
+    --success: #38A169;
+    --warning: #f5a623;
+    --info: #3182ce;
+    --input-bg: #2a314d;
+    --border-radius-sm: 6px;
+    --border-radius-md: 10px;
+    --border-radius-lg: 12px;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--dark-bg);
+    color: var(--text-light);
+    font-family: 'Poppins', sans-serif;
+    padding-bottom: 80px; /* Memberi ruang untuk bottom-nav */
+    -webkit-tap-highlight-color: transparent; /* Menghilangkan highlight biru saat tap di mobile */
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-light);
+    margin-bottom: 0.6em;
+    line-height: 1.3;
+}
+h2 { font-size: 1.2em; }
+h3 { font-size: 1.1em; }
+h4 { font-size: 1em; margin-bottom: 0.4em; color: var(--accent-blue); }
+
+
+p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 0.8em;
+}
+
+a {
+    text-decoration: none;
+    color: var(--accent-blue);
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: var(--primary-blue);
+}
+
+button {
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+}
+
+.container {
+    padding: 0 15px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.card {
+    background-color: var(--dark-card);
+    border-radius: var(--border-radius-lg);
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px var(--shadow-color);
+}
+
+.greeting {
+    margin-top: 15px;
+}
+
+.greeting h1 {
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-bottom: 0.2em;
+}
+
+.greeting p {
+    font-size: 0.9em;
+}
+
+.welcome-banner {
+    text-align: center;
+    margin-top: 20px;
+    padding: 25px 20px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+}
+
+.welcome-banner .avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin: 0 auto 15px auto;
+    background-color: var(--dark-bg); /* Placeholder, ganti dengan gambar jika ada */
+    border: 3px solid var(--white);
+    /* Jika ingin menggunakan gambar:
+    background-image: url('/public/images/avatar_panzstore.png');
+    background-size: cover;
+    background-position: center;
+    */
+}
+
+.welcome-banner h2 {
+    font-size: 1.1em;
+    font-weight: 700;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+.welcome-banner p {
+    font-size: 0.9em;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 0;
+}
+
+.category-section {
+    margin-top: 30px;
+}
+
+.category-section h2 {
+    font-size: 1.2em;
+    font-weight: 600;
+    margin-bottom: 18px;
+    color: var(--text-light);
+}
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); /* Lebih responsif */
+    gap: 16px;
+}
+
+.category-item {
+    background-color: var(--dark-card);
+    padding: 15px 10px; /* Disesuaikan paddingnya */
+    border-radius: var(--border-radius-md);
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100px; /* Disesuaikan */
+}
+
+.category-item:hover {
+    transform: translateY(-5px);
+    background-color: #2a314d; /* Sedikit lebih gelap dari var(--input-bg) */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
+}
+
+.category-item .icon-wrapper {
+    width: 45px; /* Disesuaikan */
+    height: 45px; /* Disesuaikan */
+    border-radius: var(--border-radius-sm); /* Lebih kecil */
+    margin: 0 auto 10px auto; /* Disesuaikan margin */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.category-item .icon-wrapper img {
+    width: 90%; /* Agar tidak terlalu mepet */
+    height: 90%;
+    object-fit: contain;
+}
+
+.category-item .icon-wrapper .icon-fallback-letter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--white);
+}
+
+.category-item[data-category="pulsa"] .icon-wrapper { background-color: #4A90E2; }
+.category-item[data-category="data"] .icon-wrapper { background-color: #50E3C2; }
+.category-item[data-category="token"] .icon-wrapper { background-color: #F5A623; }
+.category-item[data-category="ewallet"] .icon-wrapper { background-color: #BD10E0; }
+.category-item[data-category="game"] .icon-wrapper { background-color: #7ED321; }
+.category-item[data-category="bn_uang_elektronik"] .icon-wrapper { background-color: #8A2BE2; }
+.category-item[data-category="bn_transfer_uang"] .icon-wrapper { background-color: #00CED1; }
+.category-item[data-category="other"] .icon-wrapper { background-color: #E53E3E; }
+
+.category-item span {
+    font-size: 0.8em; /* Disesuaikan */
+    font-weight: 500;
+    color: var(--text-light);
+    word-wrap: break-word;
+    line-height: 1.3;
+    margin-top: auto;
+}
+
+.view {
+    display: none;
+    padding-top: 0; /* Default, header akan mengurus ini jika ada */
+    animation: fadeIn 0.3s ease-in-out;
+}
+.view.active {
+    display: block;
+}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+
+.page-header-dynamic {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--input-bg);
+    background-color: var(--dark-bg);
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 500; /* Cukup tinggi untuk di atas konten view */
+    box-sizing: border-box;
+}
+
+.view:not(#main-view) .container { /* Beri padding atas jika ada page-header-dynamic */
+    padding-top: calc(50px + 15px); /* Perkiraan tinggi header + margin */
+}
+/* Khusus main-view tidak perlu padding atas dari .container */
+#main-view .container {
+    padding-top: 0;
+}
+
+
+.back-button {
+    background: none;
+    border: none;
+    color: var(--accent-blue);
+    font-size: 0.9em;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 5px 10px 5px 0;
+    margin-right: 10px;
+    line-height: 1;
+    transition: color 0.2s ease;
+}
+
+.back-button:hover {
+    color: var(--primary-blue);
+}
+
+.page-header-dynamic h2 {
+    font-size: 1.1em;
+    margin: 0;
+    flex-grow: 1;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.page-title-section {
+    padding: 10px 0; /* Disesuaikan agar konsisten */
+}
+.page-title-section h2 { /* Jika ada h2 di dalam page-title-section */
+    font-size: 1.3em;
+    margin-bottom: 5px;
+}
+.page-title-section p {
+    font-size: 0.9em;
+    color: var(--text-secondary);
+    margin-bottom: 0;
+}
+
+
+.loading-msg, .error-msg, .no-product-msg {
+    text-align: center;
+    padding: 30px 15px;
+    font-style: italic;
+    color: var(--text-secondary);
+}
+.error-msg { color: var(--danger); font-weight: 500; }
+.loading-container { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; color: var(--text-secondary); }
+.spinner { width: 30px; height: 30px; border: 3px solid rgba(255,255,255,0.2); border-top-color: var(--primary-blue); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 10px; }
+.spinner-button, .spinner-button-small { width: 1em; height: 1em; border: 2px solid rgba(255,255,255,0.3); border-top-color: var(--white); border-radius: 50%; display: inline-block; animation: spin 0.8s linear infinite; margin-right: 5px;}
+.spinner-button-small { width: 0.8em; height: 0.8em; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+
+#product-list {
+    margin-top: 0; /* Dihapus jika page-title-section sudah memberi jarak */
+    /* padding: 0 15px; dihapus, .container sudah menangani */
+}
+
+.product-list-item {
+    background-color: var(--dark-card);
+    padding: 15px;
+    margin-bottom: 12px;
+    border-radius: var(--border-radius-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.product-list-item:hover { background-color: #2a314d; transform: translateX(3px); }
+.product-list-item .product-item-info { flex-grow: 1; margin-right: 10px; }
+.product-list-item .product-item-name { font-size: 0.95em; line-height: 1.4; color: var(--text-light); }
+.product-list-item .provider-tag { font-size: 0.8em; color: var(--text-secondary); margin-left: 5px; }
+.product-list-item .product-item-price { font-weight: 600; color: var(--accent-blue); font-size: 0.95em; white-space: nowrap; }
+
+.subcategory-item .icon-wrapper img,
+.subcategory-item .icon-wrapper .icon-fallback-letter { width: 100%; height: 100%; object-fit: contain; }
+.subcategory-item .icon-fallback-letter { display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 600; color: var(--white); }
+
+#bebas-nominal-list { margin-top: 0; }
+.bebas-nominal-list-item { background-color: var(--dark-card); padding: 15px; margin-bottom: 12px; border-radius: var(--border-radius-md); display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: background-color 0.2s ease, transform 0.2s ease; }
+.bebas-nominal-list-item:hover { background-color: #2a314d; transform: translateX(3px); }
+.bebas-nominal-list-item .item-info { display: flex; align-items: center; }
+.bebas-nominal-list-item .item-icon { width: 40px; height: 40px; margin-right: 15px; border-radius: var(--border-radius-sm); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
+.bebas-nominal-list-item .item-icon img { width: 100%; height: 100%; object-fit: contain; }
+.bebas-nominal-list-item .item-name { font-size: 1em; font-weight: 500; }
+.bebas-nominal-list-item .arrow-icon { font-size: 1.3em; color: var(--text-secondary); }
+
+
+#detail-input-view .product-info-header { display: flex; align-items: center; padding: 15px; border-bottom: 1px solid var(--input-bg); margin: 0 0 25px 0; }
+#detail-input-view .product-icon { width: 50px; height: 50px; margin-right: 18px; border-radius: var(--border-radius-md); display: flex; align-items: center; justify-content: center; overflow: hidden; background-color: var(--dark-card); flex-shrink: 0;}
+#detail-input-view .product-icon img { width: 75%; height: 75%; object-fit: contain; }
+#detail-input-view .product-icon .icon-fallback-letter-large { display: none; font-size: 24px; font-weight: bold; color: var(--text-light); width: 100%; height: 100%; align-items: center; justify-content: center; background-color: #2a314d; border-radius: var(--border-radius-md); }
+#detail-input-view .product-details h3 { font-size: 1.2em; margin-bottom: 6px; color: var(--text-light); }
+#detail-input-view .product-tags span { background-color: var(--accent-blue); color: var(--white); font-size: 0.7em; padding: 4px 10px; border-radius: 10px; margin-right: 6px; text-transform: uppercase; font-weight: 500; display: inline-block; }
+#detail-input-view .product-tags span.available { background-color: var(--success); } /* Misal untuk status */
+#detail-input-view .product-tags span.category { background-color: var(--info); } /* Misal untuk kategori */
+#detail-input-view .product-tags span.provider { background-color: var(--text-secondary); color: var(--dark-bg); }
+
+
+.input-group { margin: 0 0 25px 0; }
+.input-group label { display: block; font-size: 0.9em; margin-bottom: 8px; color: var(--text-secondary); font-weight: 500; }
+.input-group input, .input-group textarea, .input-group select { width: 100%; padding: 14px 15px; background-color: var(--input-bg); border: 1px solid #3a415c; border-radius: var(--border-radius-md); color: var(--text-light); font-size: 1em; font-family: 'Poppins', sans-serif; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+.input-group input:focus, .input-group textarea:focus, .input-group select:focus { outline: none; border-color: var(--primary-blue); box-shadow: 0 0 0 3px rgba(10, 122, 255, 0.2); }
+.input-group input::placeholder, .input-group textarea::placeholder { color: var(--text-secondary); opacity: 0.7; }
+.submit-button-container { padding: 10px 0 20px 0; }
+.product-display-info { padding: 14px 15px; margin-bottom: 15px; background-color: var(--input-bg); border-radius: var(--border-radius-md); font-size: 1em; border: 1px solid #3a415c; }
+.product-display-info strong { color: var(--accent-blue); font-weight: 600;}
+
+.transaction-status-container { margin: 20px 0 15px 0; padding: 12px 15px; border-radius: var(--border-radius-md); display: none; font-size: 0.9em; line-height: 1.5; }
+.transaction-status-container.success { background-color: rgba(56, 161, 105, 0.2); color: #68D391; border: 1px solid rgba(56, 161, 105, 0.4); }
+.transaction-status-container.error, .transaction-status-container.gagal, .transaction-status-container.failed-system { background-color: rgba(229, 62, 62, 0.2); color: #FC8181; border: 1px solid rgba(229, 62, 62, 0.4); }
+.transaction-status-container.pending, .transaction-status-container.diproses, .transaction-status-container.unknown-gateway, .transaction-status-container.pending-system, .transaction-status-container.pending-gateway { background-color: rgba(245, 166, 35, 0.2); color: #F6AD55; border: 1px solid rgba(245, 166, 35, 0.4); }
+.transaction-status-container.info { background-color: rgba(49, 130, 206, 0.2); color: #63B3ED; border: 1px solid rgba(49, 130, 206, 0.4); }
+
+
+.check-status-button { background-color: rgba(255,255,255,0.1); color: var(--text-secondary); border: 1px solid rgba(255,255,255,0.2); border-radius: var(--border-radius-sm); padding: 4px 10px; font-size: 0.8em; cursor: pointer; transition: background-color 0.2s ease; margin-left: 10px; vertical-align: middle; display: inline-flex; align-items: center; gap: 5px;}
+.check-status-button:hover { background-color: rgba(255,255,255,0.2); color: var(--text-light); }
+.check-status-button:disabled { background-color: rgba(255,255,255,0.05); cursor: not-allowed; opacity: 0.7; }
+#transaction-status-bn-select { padding: 10px 15px; border-radius: 6px; display: none; font-size: 0.9em; line-height: 1.5;}
+#transaction-status-bn-select.error { background-color: var(--danger); color: var(--white); }
+
+#riwayat-list { margin-top: 0; }
+.riwayat-item { margin: 0 0 12px 0; padding: 15px; border-left: 4px solid var(--text-secondary); transition: border-left-color 0.3s ease; background-color: var(--dark-card); border-radius: var(--border-radius-md); box-shadow: 0 3px 8px rgba(0,0,0,0.2); }
+.riwayat-item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--input-bg); flex-wrap: wrap; gap: 5px;}
+.riwayat-product { font-weight: 600; font-size: 1em; color: var(--text-light); }
+.riwayat-provider { font-size: 0.85em; color: var(--text-secondary); }
+.riwayat-status { font-size: 0.75em; font-weight: 600; padding: 3px 8px; border-radius: var(--border-radius-sm); text-transform: uppercase; color: var(--white); background-color: var(--text-secondary); white-space: nowrap; }
+.riwayat-item.status-sukses .riwayat-status { background-color: var(--success); }
+.riwayat-item.status-gagal .riwayat-status, .riwayat-item.status-failed-system .riwayat-status, .riwayat-item.status-error .riwayat-status { background-color: var(--danger); }
+.riwayat-item.status-pending .riwayat-status, .riwayat-item.status-diproses .riwayat-status, .riwayat-item.status-unknown-gateway .riwayat-status, .riwayat-item.status-pending-system .riwayat-status, .riwayat-item.status-pending-gateway .riwayat-status { background-color: var(--warning); color: var(--dark-bg); }
+.riwayat-item.status-sukses { border-left-color: var(--success); }
+.riwayat-item.status-gagal, .riwayat-item.status-failed-system, .riwayat-item.status-error { border-left-color: var(--danger); }
+.riwayat-item.status-pending, .riwayat-item.status-diproses, .riwayat-item.status-unknown-gateway, .riwayat-item.status-pending-system, .riwayat-item.status-pending-gateway { border-left-color: var(--warning); }
+.riwayat-item-body p { font-size: 0.9em; margin-bottom: 6px; color: var(--text-secondary); } .riwayat-item-body strong { color: var(--text-light); font-weight: 500; }
+.riwayat-item-body .riwayat-sn { font-family: monospace, 'Courier New', Courier; font-size: 0.85em; word-break: break-all; color: var(--accent-blue); background-color: var(--input-bg); padding: 2px 4px; border-radius: var(--border-radius-sm); display: inline-block;}
+.riwayat-item-body .riwayat-message { font-size: 0.85em; margin-top: 8px; padding: 6px 10px; border-radius: var(--border-radius-sm); border: 1px solid transparent;}
+.riwayat-item-body .riwayat-message.error-msg { background-color: rgba(229, 62, 62, 0.1); color: #FC8181; border-color: rgba(229, 62, 62, 0.2); }
+.riwayat-item-body .riwayat-message.info-msg { background-color: rgba(49, 130, 206, 0.1); color: #63B3ED; border-color: rgba(49, 130, 206, 0.2); }
+.riwayat-item-footer { margin-top: 12px; padding-top: 8px; border-top: 1px solid var(--input-bg); font-size: 0.75em; color: var(--text-secondary); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 5px;}
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--dark-card);
+    display: flex;
+    justify-content: space-around;
+    padding: 6px 0; /* Disesuaikan */
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.3); /* Disesuaikan */
+    border-top: 1px solid var(--input-bg);
+    z-index: 1000;
+}
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Center content vertically */
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.7em; /* Disesuaikan agar 4 item muat */
+    flex: 1;
+    padding: 4px 2px; /* Disesuaikan */
+    transition: color 0.2s ease, transform 0.1s ease;
+    text-align: center;
+    min-height: 48px; /* Pastikan tinggi konsisten */
+}
+.nav-item:active { transform: scale(0.95); }
+.nav-item.active { color: var(--primary-blue); font-weight: 600; /* Lebih tebal */ }
+.nav-item .nav-icon {
+    font-size: 1.6em; /* Disesuaikan, mungkin 1.5em atau 1.4em */
+    margin-bottom: 2px; /* Jarak ikon ke teks */
+    line-height: 1; /* Pastikan ikon tidak terlalu banyak spasi vertikal */
+}
+.nav-item span {
+    line-height: 1.2; /* Jarak baris untuk teks */
+    display: block; /* Pastikan span mengambil blok agar tidak ada masalah alignment */
+}
+
+
+.user-actions { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+.button-base { padding: 10px 18px; font-size: 0.95em; font-weight: 600; border: none; border-radius: var(--border-radius-md); cursor: pointer; transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease, opacity 0.2s ease; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-align: center; text-decoration: none; white-space: nowrap; line-height: 1.4; }
+.button-base:active:not(:disabled) { transform: scale(0.98); }
+.button-base:disabled { background-color: var(--text-secondary) !important; color: rgba(255, 255, 255, 0.7) !important; cursor: not-allowed !important; opacity: 0.6 !important;}
+.submit-button { padding: 14px 18px; font-size: 1.05em; width: 100%; background-color: var(--primary-blue); color: var(--white); border-radius: var(--border-radius-md); cursor: pointer; transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.2s ease, opacity 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px; border: none; font-weight: 600; }
+.submit-button:hover:not(:disabled) { background-color: var(--accent-blue); box-shadow: 0 4px 12px rgba(10, 122, 255, 0.2); }
+.submit-button:active:not(:disabled) { transform: scale(0.98); }
+.submit-button:disabled { background-color: var(--text-secondary) !important; cursor: not-allowed !important; opacity: 0.7 !important; }
+.button-small { padding: 8px 14px; font-size: 0.85em; border-radius: var(--border-radius-sm); }
+.button-base.primary, .submit-button { background-color: var(--primary-blue); color: var(--white); }
+.button-base.primary:hover:not(:disabled), .submit-button:hover:not(:disabled) { background-color: var(--accent-blue); }
+.button-base.danger { background-color: var(--danger); color: var(--white); }
+.button-base.danger:hover:not(:disabled) { background-color: #c53030; }
+.button-base.secondary { background-color: var(--input-bg); color: var(--text-light); border: 1px solid #3a415c; }
+.button-base.secondary:hover:not(:disabled) { background-color: #3a415c; border-color: #4a5568; }
+#profile-logout-button { width: 100%; display: block; padding: 12px 18px; font-size: 0.95em; }
+#show-login-page-button { display: block; margin-left: auto; margin-right: auto; width: 100%; }
+
+/* Styling untuk Bantuan View */
+#bantuan-view .card {
+    margin-top: 15px; /* Jarak antar card di halaman bantuan */
+}
+#bantuan-view .kontak-info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--input-bg);
+    font-size: 0.95em;
+}
+#bantuan-view .kontak-info-item:last-of-type { /* Hanya item kontak terakhir dalam grupnya */
+    border-bottom: none;
+}
+#bantuan-view .kontak-label {
+    color: var(--text-secondary);
+    margin-right: 10px;
+    flex-shrink: 0; /* Agar label tidak menyusut */
+}
+#bantuan-view .kontak-nilai {
+    color: var(--text-light);
+    font-weight: 500;
+    text-align: right;
+    word-break: break-all; /* Agar email/nomor panjang bisa wrap */
+}
+#bantuan-view .kontak-link {
+    color: var(--accent-blue); /* Warna link */
+    text-decoration: underline;
+    text-decoration-color: rgba(var(--accent-blue), 0.5);
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+#bantuan-view .kontak-link:hover {
+    color: var(--primary-blue);
+    text-decoration-color: var(--primary-blue);
+}
+
+#bantuan-view .faq-item {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--input-bg);
+}
+#bantuan-view .faq-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+#bantuan-view .faq-item h4 {
+    margin-bottom: 8px; /* Jarak pertanyaan ke jawaban */
+    font-weight: 600; /* Pertanyaan lebih tebal */
+    color: var(--text-light); /* Warna pertanyaan */
+}
+#bantuan-view .faq-item p {
+    font-size: 0.9em; /* Ukuran font jawaban */
+    margin-bottom: 0; /* Hilangkan margin bawah default paragraf */
+    color: var(--text-secondary);
+}
+
+/* Gaya untuk View Otentikasi (digunakan di index.html untuk forgot/reset) */
+.auth-view .page-header-dynamic {
+    background-color: var(--dark-bg); /* Samakan dengan header lain */
+}
+.auth-view .container {
+    /* padding-top sudah diatur oleh .view:not(#main-view) .container */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; -- Biarkan konten mulai dari atas jika ada header */
+    padding-bottom: 30px; /* Beri jarak di bawah form */
+}
+
+.auth-form-container { /* Ini adalah .card di dalam .auth-view */
+    width: 100%;
+    max-width: 420px; /* Sedikit lebih lebar untuk form */
+    margin-top: 20px; /* Jarak dari header (jika ada) atau dari atas container */
+    padding: 25px 30px;
+}
+
+.auth-form-container h2 {
+    text-align: center;
+    font-size: 1.4em;
+    margin-bottom: 25px;
+    color: var(--text-light);
+}
+
+.auth-form-container > p { /* Paragraf deskripsi di dalam .auth-form-container */
+    font-size: 0.9em;
+    color: var(--text-secondary);
+    text-align: center;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.auth-switch { /* Digunakan di login.html & register.html */
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.85em;
+}
+.auth-switch p {
+    margin-bottom: 8px;
+    color: var(--text-secondary);
+}
+.auth-switch a {
+    font-weight: 500;
+    color: var(--accent-blue);
+}
+.auth-switch a:hover {
+    text-decoration: underline;
+}
+
+.auth-form-container .transaction-status-container {
+    margin-top: -10px;
+    margin-bottom: 20px;
+}
+
+/* Pastikan spinner button style ada */
+.spinner-button {
+    width: 1em;
+    height: 1em;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: var(--white);
+    border-radius: 50%;
+    display: inline-block;
+    animation: spin 0.8s linear infinite;
+    margin-right: 8px; /* Jarak ke teks tombol */
+    vertical-align: middle;
+}
+@keyframes spin { to { transform: rotate(360deg); } }

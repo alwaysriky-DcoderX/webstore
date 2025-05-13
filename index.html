@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panz Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="./public/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="public/style.css">
+</head>
+<body>
+
+    <div id="main-view" class="view active">
+        <main class="container">
+            <section class="greeting" style="margin-top: 15px;">
+                <div id="greeting-content">
+                    <h1 id="greeting-name">Selamat Datang!</h1>
+                    <p>Silakan pilih produk yang Anda inginkan.</p>
+                </div>
+                <div id="user-info-display" style="display:none; margin-top:10px; padding:15px; background-color: var(--dark-card); border-radius:var(--border-radius-lg); box-shadow: 0 3px 10px rgba(0,0,0,0.2);">
+                    <p style="margin-bottom:8px; font-size:1.1em;">Halo, <strong id="display-username" style="color: var(--primary-blue);"></strong>!</p>
+                    <p style="margin-bottom:15px; font-size:1em;">Saldo Anda: <strong id="display-user-balance" style="color: var(--accent-blue); font-weight:bold;">Rp 0</strong></p>
+                    <div class="user-actions">
+                        <button id="deposit-button" class="button-base button-small primary">Deposit Saldo</button>
+                        <button id="logout-button" class="button-base button-small danger">Logout</button>
+                    </div>
+                </div>
+                 <button id="show-login-page-button" class="button-base primary" style="margin-top:20px; display:block; width:100%; text-align:center;">Login / Registrasi</button>
+            </section>
+
+            <section class="card welcome-banner" id="welcome-banner-main" style="margin-top:20px;"><div class="avatar"></div><h2>PANZ STORE</h2><p>Topup & PPOB Terlengkap</p></section>
+
+            <section class="category-section" id="category-section-main">
+                <h2>Pilih Kategori</h2>
+                <div class="category-grid">
+                    <div class="category-item" data-category="pulsa" onclick="showProductListView('pulsa', 'Pulsa')"><div class="icon-wrapper"><img src="/public/icons/pulsa.png" alt="Pulsa" onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#4A90E2'; this.parentElement.innerHTML += '<span class=\'icon-fallback-letter\'>P</span>'"></div><span>Pulsa</span></div>
+                    <div class="category-item" data-category="data" onclick="showProductListView('data', 'Paket Data')"><div class="icon-wrapper"><img src="/public/icons/data.png" alt="Paket Data" onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#50E3C2'; this.parentElement.innerHTML += '<span class=\'icon-fallback-letter\'>D</span>'"></div><span>Paket Data</span></div>
+                    <div class="category-item" data-category="token" onclick="showProductListView('token', 'Token PLN')"><div class="icon-wrapper"><img src="/public/icons/token.png" alt="Token PLN" onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#F5A623'; this.parentElement.innerHTML += '<span class=\'icon-fallback-letter\'>T</span>'"></div><span>Token Pln</span></div>
+                    <div class="category-item" data-category="ewallet" onclick="showProductListView('ewallet', 'E-Wallet')"><div class="icon-wrapper"><img src="/public/icons/ewallet.png" alt="E-Wallet" onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#BD10E0'; this.parentElement.innerHTML += '<span class=\'icon-fallback-letter\'>E</span>'"></div><span>E-Wallet</span></div>
+                    <div class="category-item" data-category="game" onclick="showProductListView('game', 'Game')"><div class="icon-wrapper"><img src="/public/icons/game.png" alt="Game" onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#7ED321'; this.parentElement.innerHTML += '<span class=\'icon-fallback-letter\'>G</span>'"></div><span>Game</span></div>
+                    <div class="category-item" data-category="bn_uang_elektronik" onclick="showBebasNominalServiceSelection('uang_elektronik', 'Bebas Nominal Uang Elektronik')">
+                        <div class="icon-wrapper"><img src="/public/icons/ewallet.png" alt="BN E-Wallet" onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#8A2BE2'; this.parentElement.innerHTML += '<span class=\'icon-fallback-letter\'>B</span>'"></div>
+                        <span>BN Uang Elektronik</span>
+                    </div>
+                    <div class="category-item" data-category="bn_transfer_uang" onclick="showBebasNominalServiceSelection('transfer_uang', 'Bebas Nominal Transfer Uang')">
+                        <div class="icon-wrapper"><img src="/public/icons/transfer.png" alt="BN Transfer" onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#00CED1'; this.parentElement.innerHTML += '<span class=\'icon-fallback-letter\'>B</span>'"></div>
+                        <span>BN Transfer Uang</span>
+                    </div>
+                    <div class="category-item" data-category="other" onclick="showProductListView('other', 'Lainnya')">
+                        <div class="icon-wrapper"><img src="/public/icons/other.png" alt="Lainnya" onerror="this.style.display='none'; this.parentElement.style.backgroundColor='#E53E3E'; this.parentElement.innerHTML += '<span class=\'icon-fallback-letter\'>L</span>'"></div>
+                        <span>Lainnya</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="forgot-password-view" class="view auth-view"> <header class="page-header-dynamic">
+            <button id="forgot-password-back-button" class="back-button">&lt; Kembali ke Login</button>
+            <h2>Lupa Password</h2>
+        </header>
+        <main class="container">
+            <div class="auth-form-container card">
+                <p style="text-align: center; margin-bottom: 20px;">Masukkan alamat email Anda yang terdaftar. Kami akan mengirimkan link untuk mereset password Anda.</p>
+                <form id="forgot-password-form">
+                    <div class="input-group">
+                        <label for="forgot-email">Email Terdaftar</label>
+                        <input type="email" id="forgot-email" required autocomplete="email">
+                    </div>
+                    <div id="forgot-password-status" class="transaction-status-container" style="margin-top:0px; margin-bottom:15px; text-align:center; display:none;"></div>
+                    <div class="submit-button-container">
+                        <button type="submit" class="submit-button" id="forgot-password-submit-button">Kirim Link Reset</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <div id="reset-password-view" class="view auth-view"> <header class="page-header-dynamic">
+            <h2>Reset Password Anda</h2>
+            <button id="reset-password-back-to-login-button" class="back-button" style="display:none;">&lt; Kembali ke Login</button>
+        </header>
+        <main class="container">
+            <div class="auth-form-container card">
+                <p style="text-align: center; margin-bottom: 20px;">Masukkan password baru Anda.</p>
+                <form id="reset-password-form">
+                    <input type="hidden" id="reset-token" value="">
+                    <div class="input-group">
+                        <label for="reset-new-password">Password Baru (min. 6 karakter)</label>
+                        <input type="password" id="reset-new-password" required minlength="6" autocomplete="new-password">
+                    </div>
+                    <div class="input-group">
+                        <label for="reset-confirm-password">Konfirmasi Password Baru</label>
+                        <input type="password" id="reset-confirm-password" required minlength="6" autocomplete="new-password">
+                    </div>
+                    <div id="reset-password-status" class="transaction-status-container" style="margin-top:0px; margin-bottom:15px; text-align:center; display:none;"></div>
+                    <div class="submit-button-container">
+                        <button type="submit" class="submit-button" id="reset-password-submit-button">Simpan Password Baru</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <div id="profile-view" class="view">
+        <header class="page-header-dynamic">
+            <button id="profile-back-button" class="back-button">&lt; Kembali</button>
+            <h2>Profil & Pengaturan</h2>
+        </header>
+        <main class="container">
+            <section class="card">
+                <h3>Informasi Akun</h3>
+                <p>Username: <strong id="profile-username">-</strong></p>
+                <p>Email: <strong id="profile-email">-</strong></p>
+                <p>Saldo: <strong id="profile-saldo" style="color: var(--accent-blue); font-size:1.2em;">Rp 0</strong></p>
+                <button id="profile-deposit-button" class="button-base button-small primary" style="margin-top:15px;">Deposit Saldo</button>
+            </section>
+            <section class="card">
+                <h3>Ubah Password</h3>
+                <form id="change-password-form">
+                    <div class="input-group">
+                        <label for="current-password">Password Saat Ini</label>
+                        <input type="password" id="current-password" required autocomplete="current-password">
+                    </div>
+                    <div class="input-group">
+                        <label for="new-password">Password Baru (min. 6 karakter)</label>
+                        <input type="password" id="new-password" required minlength="6" autocomplete="new-password">
+                    </div>
+                    <div class="input-group">
+                        <label for="confirm-new-password">Konfirmasi Password Baru</label>
+                        <input type="password" id="confirm-new-password" required minlength="6" autocomplete="new-password">
+                    </div>
+                    <div id="change-password-status" class="transaction-status-container" style="margin-top:0px; margin-bottom:15px; text-align:center; display:none;"></div>
+                    <div class="submit-button-container">
+                        <button type="submit" class="submit-button">Ubah Password</button>
+                    </div>
+                </form>
+            </section>
+            <button id="profile-logout-button" class="button-base danger" style="margin-top:20px;">Logout</button>
+        </main>
+    </div>
+    <div id="deposit-view" class="view">
+        <header class="page-header-dynamic">
+             <button id="deposit-back-button" class="back-button">&lt; Kembali</button>
+            <h2>Deposit Saldo via QRIS</h2>
+         </header>
+        <main class="container">
+            <p style="font-size: 0.9em; color: var(--text-light); margin: 15px 0 5px 0; text-align: center;">Silakan scan Kode QRIS Statis di bawah ini.</p>
+            <div class="card">
+                <div style="text-align:center; margin-bottom: 20px;">
+                    <img id="static-qris-image" src="/public/images/qris_statis_anda.png" alt="Scan QRIS Ini" style="max-width: 280px; max-height:280px; margin:0 auto; border: 1px solid var(--input-bg); padding: 5px;">
+                    <p style="font-size:0.85em; margin-top:10px; color: var(--warning);">Atas Nama: IPAN X CUAN</p>
+                </div>
+                <div style="border-top: 1px solid var(--input-bg); padding-top: 20px;">
+                     <div class="input-group">
+                        <label for="deposit-desired-amount">Jumlah Saldo yang Diinginkan (Rp)</label>
+                        <input type="number" id="deposit-desired-amount" placeholder="Min. 10000" min="10000" step="1000" required>
+                    </div>
+                    <div class="submit-button-container">
+                        <button id="calculate-transfer-button" class="submit-button">Lihat Jumlah Transfer</button>
+                    </div>
+                    <div id="deposit-calc-status" class="transaction-status-container" style="margin-top:15px; text-align:center;"></div>
+                    <div id="transfer-instruction-area" style="display:none; margin-top:20px; padding: 15px; border: 1px solid var(--info); border-radius: var(--border-radius-md); background-color: rgba(49, 130, 206, 0.1);">
+                         <p style="font-weight: 600; color: var(--text-light); margin-bottom: 10px;">Instruksi Pembayaran:</p>
+                         <p id="transfer-instruction-text" style="font-size: 1.1em; line-height: 1.6;"></p>
+                         <p id="transfer-order-id" style="font-size:0.8em; margin-top:10px;"></p>
+                         <p style="font-size: 0.9em; margin-top:15px; color: var(--warning);">PENTING: Pastikan Anda mentransfer jumlah yang **PERSIS** sama. Saldo akan ditambahkan setelah pembayaran terverifikasi.</p>
+                    </div>
+                </div>
+            </div>
+             <button id="back-to-home-from-deposit-alt" class="button-base secondary" style="margin-top:5px; display:block; width: fit-content; margin-left:auto; margin-right:auto;">Kembali ke Home</button>
+        </main>
+    </div>
+    <div id="product-list-view" class="view">
+        <header class="page-header-dynamic">
+             <button id="product-list-back-button" class="back-button" style="display: none;">&lt; Kembali</button>
+             <h2 id="product-list-category-title">Produk</h2>
+         </header>
+         <main class="container">
+             <div class="page-title-section" style="padding: 10px 15px 10px 15px;">
+                  <p>Pilih produk atau layanan yang diinginkan</p>
+             </div>
+             <div id="product-list"><p class="loading-msg">Memuat...</p></div>
+             <div id="transaction-status-list" class="transaction-status-container"><span id="transaction-message-list"></span><button id="check-status-button-list" class="check-status-button" style="display: none; margin-left: 10px;">Cek Status</button></div>
+         </main>
+    </div>
+    <div id="bebas-nominal-view" class="view">
+        <header class="page-header-dynamic">
+            <button id="bebas-nominal-back-button" class="back-button">&lt; Kembali</button>
+            <h2>Nominal Bebas (Legacy)</h2>
+         </header>
+         <main class="container">
+             <div class="page-title-section" style="padding: 10px 15px 10px 15px;">
+                 <p>Pilih tipe produk</p>
+             </div>
+             <div id="bebas-nominal-list"><p class="loading-msg">Memuat tipe produk...</p></div>
+             <div id="transaction-status-bn-select" class="transaction-status-container" style="margin-top: 20px;"><span id="transaction-message-bn-select"></span></div>
+         </main>
+    </div>
+    <div id="detail-input-view" class="view">
+        <header class="page-header-dynamic">
+            <button id="detail-input-back-button" class="back-button">&lt; Kembali</button>
+            <h2 id="detail-input-view-title">Detail Produk</h2>
+         </header>
+         <main class="container">
+             <div class="product-info-header">
+                 <div class="product-icon" id="detail-product-icon-wrapper"><img id="detail-product-icon" src="/public/icons/default.png" alt="icon"></div>
+                 <div class="product-details"><h3 id="detail-product-name">Nama Produk</h3><div class="product-tags"><span id="detail-product-tag1" class="tag">TAG 1</span><span id="detail-product-tag2" class="tag available">Tersedia</span></div></div>
+             </div>
+             <form id="detail-input-form" onsubmit="handleDetailSubmit(event)">
+                 <input type="hidden" id="detail-input-product-code"><input type="hidden" id="detail-input-product-price"><input type="hidden" id="detail-input-is-bebas-nominal"><input type="hidden" id="detail-input-origin-view">
+                 <input type="hidden" id="detail-input-parent-key">
+                 <input type="hidden" id="detail-input-parent-title">
+                 <div id="input-fields-container"></div>
+                 <div class="submit-button-container"><button type="submit" class="submit-button" id="detail-submit-button">Lanjutkan</button></div>
+             </form>
+             <div id="transaction-status-detail" class="transaction-status-container"><span id="transaction-message-detail"></span><button id="check-status-button-detail" class="check-status-button" style="display: none; margin-left: 10px;">Cek Status</button></div>
+         </main>
+    </div>
+    <div id="riwayat-view" class="view">
+        <header class="page-header-dynamic">
+            <button id="riwayat-back-button" class="back-button">&lt; Kembali</button>
+            <h2>Riwayat Transaksi</h2>
+        </header>
+        <main class="container">
+             <div class="page-title-section" style="padding: 10px 15px 10px 15px;">
+                 <p>Daftar transaksi terakhir Anda.</p>
+            </div>
+            <div id="riwayat-list"><p class="loading-msg">Memuat riwayat...</p></div>
+        </main>
+    </div>
+    <div id="bantuan-view" class="view">
+        <header class="page-header-dynamic">
+            <button id="bantuan-back-button" class="back-button">&lt; Kembali ke Home</button>
+            <h2>Pusat Bantuan</h2>
+        </header>
+        <main class="container">
+            <div class="page-title-section" style="padding-top: 15px; padding-bottom: 5px;"> <p style="text-align: center;">Jika Anda memerlukan bantuan atau memiliki pertanyaan, silakan hubungi kami.</p>
+            </div>
+            <section class="card">
+                <h3>Informasi Kontak</h3>
+                <div class="kontak-info-item">
+                    <span class="kontak-label">Email:</span>
+                    <a href="mailto:panzstore051@gmail.com" class="kontak-nilai kontak-link">panzstore051@gmail.com</a>
+                </div>
+                <div class="kontak-info-item">
+                    <span class="kontak-label">WhatsApp:</span>
+                    <a href="https://wa.me/6283170872572" target="_blank" class="kontak-nilai kontak-link">083170872572</a>
+                </div>
+                <p style="margin-top: 20px; font-size: 0.85em; color: var(--text-secondary); text-align: center;">
+                    Kami akan berusaha merespons secepat mungkin selama jam operasional.
+                </p>
+            </section>
+             <section class="card">
+                <h3>Pertanyaan Umum (FAQ)</h3>
+                <div class="faq-item">
+                    <h4>Bagaimana cara melakukan Top Up Saldo?</h4>
+                    <p>Anda dapat melakukan top up saldo melalui menu "Deposit Saldo" di halaman utama atau di halaman profil. Ikuti instruksi pembayaran yang tertera.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Transaksi saya pending, apa yang harus dilakukan?</h4>
+                    <p>Silakan tunggu beberapa saat. Jika status tidak berubah dalam waktu yang lama, Anda dapat menggunakan tombol "Cek Status" pada detail transaksi atau menghubungi kami dengan menyertakan ID Referensi transaksi Anda.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Apakah ada biaya admin?</h4>
+                    <p>Harga yang tertera pada produk umumnya sudah termasuk biaya layanan, kecuali ada keterangan khusus.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <nav class="bottom-nav" id="bottom-nav" style="display:flex;">
+        <a href="#" id="nav-home" class="nav-item active"><span class="nav-icon">&#127968;</span><span>Home</span></a>
+        <a href="#" id="nav-riwayat" class="nav-item"><span class="nav-icon">&#128337;</span><span>Riwayat</span></a>
+        <a href="#" id="nav-bantuan" class="nav-item"><span class="nav-icon">&#128712;</span><span>Bantuan</span></a>
+        <a href="#" id="nav-profile" class="nav-item"><span class="nav-icon">&#128100;</span><span>Profil</span></a>
+    </nav>
+
+    <script src="public/script.js" defer></script>
+</body>
+</html>
