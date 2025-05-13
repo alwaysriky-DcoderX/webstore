@@ -33,7 +33,7 @@ const settings = {
     BCRYPT_SALT_ROUNDS: parseInt(process.env.BCRYPT_SALT_ROUNDS) || 10,
 
     // Konfigurasi Database MongoDB
-    MONGODB_URI: process.env.MONGODB_URI || ' ',
+    MONGODB_URI: process.env.MONGODB_URI || 'mongodb+srv://PanzNgen:PanzNgen051@cluster0.kqugv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
 
     // Konfigurasi Polling Deposit
     DEPOSIT_POLLING_INTERVAL_MS: parseInt(process.env.DEPOSIT_POLLING_INTERVAL_MS) || 60 * 1000, // 60 detik
