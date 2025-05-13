@@ -19,7 +19,7 @@ const settings = {
 
     // Konfigurasi Server Aplikasi Anda
     PORT: process.env.PORT || 4000,
-    APP_NAME: process.env.APP_NAME || 'Panz Store',
+    APP_NAME: process.env.APP_NAME || 'Alwaysriky Shop',
     APP_BASE_URL: process.env.APP_BASE_URL || 'https://panzngen.my.id', // Pastikan ini adalah URL publik yang benar
 
     // Konfigurasi Provider Internal
