@@ -205,14 +205,14 @@ button {
     color: var(--white);
 }
 
-.category-item[data-category="pulsa"] .icon-wrapper { background-color: #4A90E2; }
-.category-item[data-category="data"] .icon-wrapper { background-color: #50E3C2; }
-.category-item[data-category="token"] .icon-wrapper { background-color: #F5A623; }
-.category-item[data-category="ewallet"] .icon-wrapper { background-color: #BD10E0; }
-.category-item[data-category="game"] .icon-wrapper { background-color: #7ED321; }
-.category-item[data-category="bn_uang_elektronik"] .icon-wrapper { background-color: #8A2BE2; }
-.category-item[data-category="bn_transfer_uang"] .icon-wrapper { background-color: #00CED1; }
-.category-item[data-category="other"] .icon-wrapper { background-color: #E53E3E; }
+.category-item[data-category="pulsa"] .icon-wrapper { background-color: #000000; }
+.category-item[data-category="data"] .icon-wrapper { background-color: #000000; }
+.category-item[data-category="token"] .icon-wrapper { background-color: #000000; }
+.category-item[data-category="ewallet"] .icon-wrapper { background-color: #000000; }
+.category-item[data-category="game"] .icon-wrapper { background-color: #000000; }
+.category-item[data-category="bn_uang_elektronik"] .icon-wrapper { background-color: #000000; }
+.category-item[data-category="bn_transfer_uang"] .icon-wrapper { background-color: #000000; }
+.category-item[data-category="other"] .icon-wrapper { background-color: #000000; }
 
 .category-item span {
     font-size: 0.8em; /* Disesuaikan */
